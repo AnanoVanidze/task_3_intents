@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.task_3.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -43,14 +44,21 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
         super.onActivityResult(requestCode, resultCode ,data)
         if (requestCode == 1 && resultCode == RESULT_OK) {
-            val thumbnail: Bitmap? = data?.getParcelableExtra("data")
-            binding.imageview.setImageBitmap(thumbnail)
+            if(data != null){
+                val imageBitmap: Bitmap? = data.getParcelableExtra("data")
+                binding.imageview.setImageBitmap(imageBitmap)
+            }
+
         }else if(requestCode == 2 && resultCode == RESULT_OK){
-            imageUri = data?.data
-            binding.imageview.setImageURI(imageUri)
+            if(data != null){
+                imageUri = data.data
+                binding.imageview.setImageURI(imageUri)
+            }
+
         }
 
     }
